@@ -1,0 +1,111 @@
+.footer {
+    color: #111;
+    background-color: #fff;
+    padding: 36px 5vw 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 24px;
+    animation: fadeInUp 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+.footer-content {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 18px;
+}
+
+.footer-content-left,
+.footer-content-right,
+.footer-content-center {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+    font-size: 1.08rem;
+    letter-spacing: 0.01em;
+}
+
+.footer-content-left li,
+.footer-content-right li,
+.footer-content-center li {
+    list-style: none;
+    margin-bottom: 10px;
+    transition: color 0.3s, transform 0.3s;
+    cursor: pointer;
+    font-size: 1.05rem;
+    color: #111;
+}
+
+.footer-content-left li:hover,
+.footer-content-right li:hover,
+.footer-content-center li:hover {
+    color: #fff;
+    transform: translateX(5px) scale(1.05);
+}
+
+.footer-content-right h2,
+.footer-content-center h2 {
+    color: #111;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+}
+
+.footer-social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-social-icons img {
+    width: 32px;
+    transition: transform 0.3s, filter 0.3s;
+    cursor: pointer;
+    filter: none;
+}
+
+.footer-social-icons img:hover {
+    transform: scale(1.15) translateY(-4px);
+    filter: grayscale(0%) brightness(1.2);
+}
+
+.footer hr {
+    width: 100%;
+    height: 1.5px;
+    margin: 10px 0 8px 0;
+    background-color: rgba(255, 255, 255, 0.15);
+    border: none;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        padding: 24px 2vw 10px;
+        margin-top: 12px;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .footer-content-left,
+    .footer-content-right,
+    .footer-content-center {
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-social-icons {
+        justify-content: center;
+    }
+}
+
+/* Set the logo image in the footer to 100x100 pixels */
+.footer-logo img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}

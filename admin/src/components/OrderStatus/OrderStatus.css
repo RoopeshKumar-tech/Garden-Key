@@ -1,0 +1,117 @@
+.admin-order-status {
+  margin: 22px 0;
+  animation: fadeInUp 0.7s cubic-bezier(.4,0,.2,1);
+}
+
+.status-controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 26px;
+}
+
+.status-select {
+  padding: 10px 16px;
+  border: 1.5px solid #ddd;
+  border-radius: 8px;
+  font-size: 1.08rem;
+  color: #333;
+  background-color: white;
+  cursor: pointer;
+  min-width: 170px;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.status-select:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40,167,69,0.10);
+}
+
+.current-status {
+  padding: 8px 16px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  color: #333;
+  font-size: 1.05rem;
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 26px 0;
+  animation: fadeInUp 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+.status-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.step-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  margin-bottom: 10px;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.step-label {
+  font-size: 0.92rem;
+  color: #666;
+  text-align: center;
+  max-width: 90px;
+  font-weight: 500;
+}
+
+.status-line {
+  flex: 1;
+  height: 3px;
+  background: #e0e0e0;
+  margin: 0 14px;
+  position: relative;
+  top: -20px;
+  z-index: 0;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+.status-step.completed .step-dot {
+  background: #28a745;
+}
+
+.status-step.active .step-dot {
+  background: #2196F3;
+  box-shadow: 0 0 0 6px rgba(33, 150, 243, 0.13);
+}
+
+.status-line.completed {
+  background: #28a745;
+}
+
+@media (max-width: 768px) {
+  .step-label {
+    font-size: 0.7rem;
+    max-width: 60px;
+  }
+
+  .status-line {
+    margin: 0 5px;
+  }
+
+  .status-controls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .status-select {
+    width: 100%;
+  }
+}

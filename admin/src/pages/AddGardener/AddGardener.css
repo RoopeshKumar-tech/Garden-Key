@@ -1,0 +1,171 @@
+.add-gardener {
+  padding: 2.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Outfit', 'Segoe UI', sans-serif;
+  animation: fadeInUp 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+.add-gardener h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #28a745;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.add-gardener .form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  background: #fff;
+  border-radius: 1.2rem;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.07);
+  padding: 2.5rem 2rem;
+  animation: fadeInUp 1s cubic-bezier(.4,0,.2,1);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.input-group label {
+  font-weight: 700;
+  color: #222;
+  font-size: 1.08rem;
+  letter-spacing: 0.01em;
+}
+
+.add-gardener .form input,
+.add-gardener .form textarea {
+  padding: 1rem;
+  border: 1.5px solid #ddd;
+  border-radius: 10px;
+  font-size: 1.08rem;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.add-gardener .form input:focus,
+.add-gardener .form textarea:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40,167,69,0.13);
+}
+
+.add-gardener .form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.image-upload label {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  border: 2px dashed #007bff;
+  border-radius: 12px;
+  padding: 2.2rem;
+  cursor: pointer;
+  background: #f8f9fa;
+  font-weight: 600;
+  color: #007bff;
+  font-size: 1.08rem;
+  transition: border 0.3s, background 0.3s;
+}
+
+.image-upload label:hover {
+  background: #e3f2fd;
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.image-upload img {
+  max-width: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  margin-top: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.category-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+.category-options label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+}
+
+.category-options input {
+  margin-right: 0.5rem;
+}
+
+.stock-status label {
+  font-size: 1.08rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.availability-label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #222;
+}
+
+.submit-btn {
+  padding: 1.1rem;
+  background-color: #28a745;
+  color: white;
+  font-size: 1.15rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 4px 18px rgba(40,167,69,0.08);
+  margin-top: 0.7rem;
+}
+
+.submit-btn:hover {
+  background-color: #007bff;
+  color: #fff;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 32px rgba(0,123,255,0.13);
+}
+
+.submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 900px) {
+  .add-gardener .form {
+    padding: 1.2rem;
+  }
+}
+@media (max-width: 600px) {
+  .add-gardener {
+    padding: 1rem;
+  }
+  .add-gardener .form {
+    padding: 0.7rem;
+  }
+}

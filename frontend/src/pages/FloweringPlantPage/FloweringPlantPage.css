@@ -1,0 +1,64 @@
+.flowering-pot-page {
+  padding: 32px 0;
+  background: #f9fafb;
+  min-height: 80vh;
+}
+
+.flowering-pot-page h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 2rem;
+  color: #2d572c;
+  letter-spacing: 1px;
+}
+
+.flowering-pot-products {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.flowering-pot-products .product-item {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 18px 16px;
+  transition: box-shadow 0.2s;
+  width: 260px;
+}
+
+.flowering-pot-products .product-item:hover {
+  box-shadow: 0 6px 24px rgba(44, 62, 80, 0.13);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.flowering-pot-products .product-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f5f5f5;
+}
+
+.flowering-pot-products .product-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 12px 0 6px 0;
+  color: #2d572c;
+}
+
+.flowering-pot-products .product-price {
+  font-size: 1rem;
+  color: #388e3c;
+  font-weight: 500;
+}
+
+.flowering-pot-page .loading,
+.flowering-pot-page .no-products {
+  text-align: center;
+  color: #888;
+  margin-top: 40px;
+  font-size: 1.2rem;
+}

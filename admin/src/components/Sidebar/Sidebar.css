@@ -1,0 +1,110 @@
+:root {
+    --sidebar-width: 250px;
+    --border-color: #e1e1e1;
+    --active-color: #ff6b6b;
+    --hover-bg: #f9f9f9;
+    --active-bg: #fff0f0;
+    --spacing-sm: 12px;
+    --spacing-md: 20px;
+    --spacing-lg: 32px;
+    --border-radius: 8px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar {
+    width: var(--sidebar-width);
+    min-height: 100vh;
+    background: white;
+    box-shadow: var(--shadow);
+    padding: var(--spacing-lg) var(--spacing-md);
+    font-size: 1.08rem;
+    font-family: 'Outfit', 'Segoe UI', sans-serif;
+    border-radius: 0 18px 18px 0;
+    animation: fadeInUp 0.8s cubic-bezier(.4,0,.2,1);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+}
+
+.sidebar-option {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: 1.1rem var(--spacing-md);
+    border-radius: var(--border-radius);
+    transition: all 0.25s cubic-bezier(.4,0,.2,1);
+    color: #444;
+    font-weight: 500;
+    font-size: 1.08rem;
+    letter-spacing: 0.01em;
+    background: transparent;
+    box-shadow: none;
+}
+
+.sidebar-option img {
+    width: 26px;
+    height: 26px;
+    opacity: 0.8;
+    transition: all 0.2s cubic-bezier(.4,0,.2,1);
+}
+
+.sidebar-option:hover {
+    background-color: #f1f8e9;
+    color: #28a745;
+    transform: translateX(6px) scale(1.04);
+    box-shadow: 0 4px 18px rgba(40,167,69,0.08);
+}
+
+.sidebar-option:hover img {
+    opacity: 1;
+    filter: brightness(1.2);
+}
+
+.sidebar-option.active {
+    background-color: #e8f5e9;
+    color: #28a745;
+    box-shadow: 0 8px 24px rgba(40,167,69,0.13);
+    transform: scale(1.04);
+}
+
+.sidebar-option.active img {
+    opacity: 1;
+    filter: brightness(1.2);
+}
+
+@media (max-width: 900px) {
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        padding: var(--spacing-sm);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .sidebar-options {
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 0;
+        gap: var(--spacing-md);
+    }
+
+    .sidebar-option {
+        padding: var(--spacing-sm);
+        white-space: normal; /* Allow text to wrap */
+        text-overflow: unset; /* Remove ellipsis */
+    }
+
+    .sidebar-option p {
+        display: inline; /* Ensure text is visible inline */
+    }
+
+    .sidebar-option img {
+        width: 24px;
+        height: 24px;
+    }
+}

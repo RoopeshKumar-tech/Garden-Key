@@ -1,0 +1,96 @@
+:root {
+    /* Layout */
+    --nav-height: 70px;
+    --nav-padding-y: 12px;
+    --nav-padding-x: 5%;
+    
+    /* Elements */
+    --logo-min-width: 85px;
+    --logo-width: 12%;
+    --profile-size: 45px;
+    
+    /* Colors */
+    --nav-bg: #ffffff;
+    --nav-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    --hover-brightness: 1.03;
+    
+    /* Animation */
+    --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.3rem 2.5rem;
+  background: white;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+  border-radius: 0 0 18px 18px;
+  animation: fadeInUp 0.7s cubic-bezier(.4,0,.2,1);
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: 1.2rem;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+.navbar-logo img {
+  height: 48px;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1), box-shadow 0.3s;
+}
+
+.navbar-logo img:hover {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(40,167,69,0.13);
+}
+
+.admin-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.admin-user {
+  color: #1a237e;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+
+.logout-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.3s;
+  box-shadow: 0 2px 8px rgba(220,53,69,0.08);
+}
+
+.logout-btn:hover {
+  background: #b71c1c;
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 8px 24px rgba(220,53,69,0.13);
+}
+
+@media (max-width: 768px) {
+    :root {
+        --nav-height: 60px;
+        --nav-padding-x: 20px;
+        --logo-width: 15%;
+        --profile-size: 40px;
+    }
+
+    .navbar {
+        padding: var(--nav-padding-y) var(--nav-padding-x);
+    }
+}

@@ -1,0 +1,153 @@
+.page-container {
+  padding-top: 70px;
+  min-height: 100vh;
+  width: 100%;
+  animation: fadeInUp 0.8s cubic-bezier(.4,0,.2,1);
+}
+
+.about-us-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.10);
+}
+
+.page-title {
+  margin-bottom: 2.5rem;
+  text-align: center;
+  font-size: 2.7rem;
+  font-weight: 700;
+  color: #28a745;
+  letter-spacing: 0.01em;
+}
+
+.about-us {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.about-us h1 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.main-description {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 3.5rem;
+  font-size: 1.18rem;
+  color: #444;
+  line-height: 1.7;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+  margin: 2.5rem 0;
+}
+
+.feature-item {
+  background: #f8f9fa;
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  animation: fadeInUp 1s cubic-bezier(.4,0,.2,1);
+}
+
+.feature-item:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(40,167,69,0.13);
+}
+
+.feature-item h3 {
+  color: #007bff;
+  margin-bottom: 1.2rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.feature-points {
+  list-style: none;
+  padding: 0;
+  margin: 1.2rem 0;
+}
+
+.feature-points li {
+  margin: 0.6rem 0;
+  color: #555;
+  display: flex;
+  align-items: center;
+  font-size: 1.05rem;
+}
+
+.feature-points li:before {
+  content: '\2022';
+  color: #007bff;
+  margin-right: 0.6rem;
+}
+
+section {
+  margin: 3.2rem 0;
+}
+
+section h2 {
+  color: #2c3e50;
+  font-size: 2rem;
+  margin-bottom: 1.7rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.tech-stack, .mission {
+  background: #f8f9fa;
+  padding: 2.2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+}
+
+.tech-stack p, .mission p {
+  max-width: 700px;
+  margin: 0 auto 1.7rem;
+  line-height: 1.7;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .about-us {
+    padding: 1rem;
+  }
+
+  .about-us h1 {
+    font-size: 2rem;
+  }
+
+  .about-us-content {
+    padding: 1.2rem;
+    border-radius: 10px;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .main-description {
+    font-size: 1.05rem;
+  }
+
+  section h2 {
+    font-size: 1.4rem;
+  }
+}

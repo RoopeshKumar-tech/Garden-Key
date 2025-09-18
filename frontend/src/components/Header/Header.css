@@ -1,0 +1,102 @@
+.header {
+    height: 110vh;
+    max-height: 800px;
+    min-height: 400px;
+    margin: 30px auto;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/header_img.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    width: 110%;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.13);
+}
+
+.header-contents {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    gap: 28px;
+    width: 100%;
+    height: 100%;
+    padding: 0 7% 7% 7%;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.header-contents h2 {
+    font-weight: 700;
+    color: white;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.2;
+    margin: 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.25);
+    max-width: 900px;
+    letter-spacing: 0.01em;
+}
+
+.header-contents p {
+    font-size: clamp(18px, 1.7vw, 24px);
+    color: #f1f1f1;
+    max-width: 700px;
+    line-height: 1.7;
+    margin: 0;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+.header-contents button {
+    border: none;
+    color: #333;
+    font-weight: 600;
+    padding: 18px 38px;
+    background-color: white;
+    font-size: clamp(16px, 1.3vw, 20px);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.4,0,.2,1);
+    box-shadow: 0 3px 16px rgba(0, 0, 0, 0.13);
+    letter-spacing: 0.01em;
+    animation: fadeInUp 1.4s cubic-bezier(.4,0,.2,1);
+}
+
+.header-contents button:hover {
+    background-color: #e6ffe6;
+    color: #28a745;
+    transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .header {
+        width: 97%;
+        height: 80vh;
+        min-height: 300px;
+        margin: 12px auto;
+        border-radius: 18px;
+    }
+
+    .header-contents {
+        padding: 0 6% 10% 6%;
+        gap: 18px;
+    }
+
+    .header-contents button {
+        padding: 14px 28px;
+    }
+}
