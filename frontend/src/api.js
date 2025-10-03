@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_API_URL || 'https://garden-key-production.up.railway.app/';
+const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
+console.log('API Base URL:', baseURL);
 
 const api = axios.create({
     baseURL,
@@ -9,12 +11,15 @@ const api = axios.create({
     },
 });
 
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use(
+    (config) => {
+        console.log('Making request to:', config.url);
+        return config;
+    },
+    (error) => {
+        console.error('Request error:', error);
+        return Promise.reject(error);
     }
-    return config;
-});
+);
 
 export default api;

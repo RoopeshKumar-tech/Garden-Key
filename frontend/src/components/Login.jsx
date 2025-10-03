@@ -11,7 +11,8 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post('/auth/login', { email, password });
+            console.log('Attempting login to:', api.defaults.baseURL);
+            const response = await api.post('/api/auth/login', { email, password });
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('userName', response.data.user.name);
@@ -19,7 +20,16 @@ const Login = () => {
                 navigate('/');
             }
         } catch (error) {
-            toast.error(error.response?.data?.message || 'Login failed');
+            console.error('Login error:', error);
+            if (error.response) {
+                console.log('Error status:', error.response.status);
+                console.log('Error data:', error.response.data);
+                toast.error(`Login failed: ${error.response.data.message || error.response.statusText}`);
+            } else if (error.request) {
+                toast.error('Network error - Please check your connection');
+            } else {
+                toast.error('Login failed: ' + error.message);
+            }
         }
     };
 
