@@ -18,6 +18,8 @@ const HireGardener = () => {
   const [bookingDate, setBookingDate] = useState('');
   const [bookingTimeSlot, setBookingTimeSlot] = useState('');
   const [bookingLoading, setBookingLoading] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState([]);
+  const [availableSlots, setAvailableSlots] = useState([]);
   const { addToCart } = useCart();
 
   useEffect(() => {
@@ -35,17 +37,42 @@ const HireGardener = () => {
     fetchGardeners();
   }, []);
 
+  // Fetch booked slots when a gardener is selected
+  const fetchBookedSlots = async (gardenerId) => {
+    if (!gardenerId) return;
+    try {
+      const res = await axios.get(`http://localhost:4000/api/bookings/slots/${gardenerId}`);
+      setBookedSlots(res.data.bookings || []);
+      setBookingDate('');
+      setBookingTimeSlot('');
+      setAvailableSlots([]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const startBooking = (gardenerId) => {
     setBookingGardenerId(gardenerId);
-    setBookingDate('');
-    setBookingTimeSlot('');
+    fetchBookedSlots(gardenerId);
   };
 
   const cancelBooking = () => {
     setBookingGardenerId(null);
     setBookingDate('');
     setBookingTimeSlot('');
+    setAvailableSlots([]);
   };
+
+  // Update available time slots when date changes
+  useEffect(() => {
+    if (!bookingDate) return;
+    const unavailable = bookedSlots
+      .filter(b => b.date === bookingDate)
+      .map(b => b.timeSlot);
+    const filtered = timeSlots.filter(slot => !unavailable.includes(slot));
+    setAvailableSlots(filtered);
+    setBookingTimeSlot('');
+  }, [bookingDate, bookedSlots]);
 
   const submitBooking = async () => {
     if (!bookingDate || !bookingTimeSlot) {
@@ -53,7 +80,6 @@ const HireGardener = () => {
       return;
     }
 
-    // Get userId from localStorage (assuming user info is stored as JSON string)
     const user = localStorage.getItem('userData');
     let userId = null;
     if (user) {
@@ -80,7 +106,7 @@ const HireGardener = () => {
       cancelBooking();
     } catch (error) {
       console.error('Booking failed:', error);
-      alert('Failed to send booking request. Please try again.');
+      alert(error.response?.data?.message || 'Failed to send booking request. Please try again.');
     } finally {
       setBookingLoading(false);
     }
@@ -98,7 +124,7 @@ const HireGardener = () => {
       type: 'gardener',
       specialization: gardener.specialization,
       contact: gardener.contactInfo,
-      location: gardener.location
+      location: gardener.location,
     });
     alert('Gardener booking added to cart!');
   };
@@ -138,7 +164,8 @@ const HireGardener = () => {
                     onChange={(e) => setBookingTimeSlot(e.target.value)}
                   >
                     <option value="">--Choose a time slot--</option>
-                    {timeSlots.map((slot) => (
+                    {availableSlots.length === 0 && <option disabled>No slots available</option>}
+                    {availableSlots.map((slot) => (
                       <option key={slot} value={slot}>{slot}</option>
                     ))}
                   </select>

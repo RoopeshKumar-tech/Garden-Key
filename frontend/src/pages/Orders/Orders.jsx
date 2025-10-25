@@ -1,10 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Orders.css';
-import OrderStatus from '../../components/OrderStatus/OrderStatus';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+
+const ORDER_STEPS = [
+  'Order Placed',
+  'Processing',
+  'Shipped',
+  'Out for Delivery',
+  'Delivered'
+];
+
+const OrderStatusBar = ({ status }) => {
+  const currentStepIndex = ORDER_STEPS.indexOf(status);
+
+  return (
+    <div className="order-status-section">
+      <div className="order-status-bar">
+        {ORDER_STEPS.map((step, idx) => (
+          <div key={step} className="status-step">
+            <div className={`circle ${idx <= currentStepIndex ? 'active' : ''}`}>
+              {idx + 1}
+            </div>
+            <span className={`label ${idx <= currentStepIndex ? 'active' : ''}`}>
+              {step}
+            </span>
+            {idx < ORDER_STEPS.length - 1 && <div className={`line ${idx < currentStepIndex ? 'active' : ''}`}></div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 const Orders = () => {
   const { token } = useAuth();
@@ -24,13 +53,10 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/orders/history', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       if (response.data.success) {
         setOrders(response.data.orders);
-        // Fetch gardener details for gardener orders
         const gardenerOrderIds = response.data.orders
           .filter(order => order.type === 'gardener' && order.shippingAddress?.gardenerId)
           .map(order => order.shippingAddress.gardenerId);
@@ -47,7 +73,6 @@ const Orders = () => {
   };
 
   const fetchAllGardenerDetails = async (gardenerIds) => {
-    // Remove duplicates
     const uniqueIds = [...new Set(gardenerIds)];
     const details = {};
     await Promise.all(uniqueIds.map(async (id) => {
@@ -87,7 +112,6 @@ const Orders = () => {
                       <img
                         src={order.profileImage ? `http://localhost:4000${order.profileImage}` : '/profile_image.png'}
                         alt={order.name || 'Gardener'}
-                        style={{ width: 80, height: 80, borderRadius: 10, objectFit: 'cover' }}
                       />
                       <div className="item-details">
                         <p className="item-name"><strong>Name:</strong> {order.name || 'Gardener'}</p>
@@ -113,7 +137,7 @@ const Orders = () => {
                     {order.items && order.items.length > 0 ? (
                       order.items.map((item, idx) => (
                         <div key={idx} className="order-item">
-                          <img src={item.image} alt={item.name} className="order-item-img" />
+                          <img src={item.image} alt={item.name} />
                           <div className="item-details">
                             <p className="item-name">{item.name}</p>
                             <p className="item-quantity">Qty: {item.quantity}</p>
@@ -125,6 +149,8 @@ const Orders = () => {
                       <div className="no-items">No items in this order</div>
                     )}
                   </div>
+                  {/* Status bar section like admin */}
+                  <OrderStatusBar status={order.status} />
                   <div className="order-footer">
                     <p className="total-amount">
                       <strong>Total Amount:</strong> ₹{order.totalAmount}

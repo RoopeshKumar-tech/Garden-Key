@@ -1,13 +1,15 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import Booking from '../models/bookingModel.js'; // Do you have this model?
+import Booking from '../models/bookingModel.js';
 import Order from '../models/orderModel.js';
 import Gardener from '../models/gardenerModel.js';
-// If not, I can create a simple version for you
 
 const router = express.Router();
 
-// Route: POST /api/bookings
+// ----------------------------
+// POST /api/bookings
+// Create a new booking
+// ----------------------------
 router.post('/', async (req, res) => {
   try {
     const { userId, gardenerId, date, timeSlot } = req.body;
@@ -16,6 +18,22 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ message: 'Missing booking fields' });
     }
 
+    // --- Check if gardener is already booked for the same date & time ---
+    const existingBooking = await Booking.findOne({
+      gardenerId,
+      date,
+      timeSlot,
+      status: { $in: ['pending', 'approved'] }, // only active bookings
+    });
+
+    if (existingBooking) {
+      return res.status(400).json({
+        success: false,
+        message: 'This gardener is not available at the selected date and time slot.'
+      });
+    }
+
+    // --- Create new booking ---
     const newBooking = new Booking({
       userId,
       gardenerId,
@@ -23,13 +41,12 @@ router.post('/', async (req, res) => {
       timeSlot,
       status: 'pending',
     });
-
     await newBooking.save();
 
-    // Fetch gardener details for storing in order
+    // --- Fetch gardener details ---
     const gardener = await Gardener.findById(gardenerId);
 
-    // Also create an order of type 'gardener'
+    // --- Create corresponding order ---
     const order = new Order({
       orderId: 'GD' + Date.now(),
       userId,
@@ -47,23 +64,35 @@ router.post('/', async (req, res) => {
     });
     await order.save();
 
-    res.status(201).json({ message: 'Booking request submitted', booking: newBooking });
+    res.status(201).json({
+      success: true,
+      message: 'Booking request submitted',
+      booking: newBooking
+    });
+
   } catch (err) {
     console.error('Booking error:', err);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 });
-// Get all bookings (for admin)
+
+// ----------------------------
+// GET /api/bookings/user/:userId
+// Fetch bookings for a user
+// ----------------------------
 router.get('/user/:userId', async (req, res) => {
   try {
     const bookings = await Booking.find({ userId: req.params.userId }).populate('gardenerId');
     res.json({ success: true, bookings });
   } catch (err) {
-    res.status(500).json({ message: 'Error fetching user bookings' });
+    res.status(500).json({ success: false, message: 'Error fetching user bookings' });
   }
 });
 
-// ✅ Approve a booking
+// ----------------------------
+// PUT /api/bookings/:id/approve
+// Approve a booking (admin)
+// ----------------------------
 router.put('/:id/approve', async (req, res) => {
   try {
     const updated = await Booking.findByIdAndUpdate(
@@ -71,13 +100,23 @@ router.put('/:id/approve', async (req, res) => {
       { status: 'approved' },
       { new: true }
     );
+
+    // Update the corresponding order status
+    await Order.findOneAndUpdate(
+      { gardenerId: updated.gardenerId, date: updated.date, timeSlot: updated.timeSlot },
+      { bookingStatus: 'approved', status: 'approved' }
+    );
+
     res.json({ success: true, message: 'Booking approved', booking: updated });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
 
-// ✅ Reject a booking
+// ----------------------------
+// PUT /api/bookings/:id/reject
+// Reject a booking (admin)
+// ----------------------------
 router.put('/:id/reject', async (req, res) => {
   try {
     const updated = await Booking.findByIdAndUpdate(
@@ -85,10 +124,34 @@ router.put('/:id/reject', async (req, res) => {
       { status: 'rejected' },
       { new: true }
     );
+
+    // Update the corresponding order status
+    await Order.findOneAndUpdate(
+      { gardenerId: updated.gardenerId, date: updated.date, timeSlot: updated.timeSlot },
+      { bookingStatus: 'rejected', status: 'rejected' }
+    );
+
     res.json({ success: true, message: 'Booking rejected', booking: updated });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
 });
-export default router;
 
+// ----------------------------
+// GET /api/bookings/slots/:gardenerId
+// Fetch all active bookings for a gardener (used in frontend to filter available slots)
+// ----------------------------
+router.get('/slots/:gardenerId', async (req, res) => {
+  try {
+    const bookings = await Booking.find({
+      gardenerId: req.params.gardenerId,
+      status: { $in: ['pending', 'approved'] } // only active bookings
+    });
+
+    res.json({ success: true, bookings });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Error fetching gardener bookings' });
+  }
+});
+
+export default router;
